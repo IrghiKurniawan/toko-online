@@ -27,14 +27,15 @@
                         <li class="nav-item">
                             {{-- panggil lewat path href="/path" --}}
                             <a class="nav-link" aria-current="page" href="/dashboard">Home</a>
-                        </li>
+                        </li>    
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-link nav-link">Logout</button>
+                                <button type="submit" class="btn btn-danger">Logout</button>
                             </form>
                         </li>
-
                     </ul>
                 </div>
             </div>
