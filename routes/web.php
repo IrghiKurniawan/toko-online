@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
+Route::get('/products', [ProductController::class, 'index'])->name('products');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
