@@ -1,15 +1,34 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
-Route::get('/products', [ProductController::class, 'index'])->name('products');
+/*
+| Dashboard Route
+*/
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->name('dashboard');
+})->middleware('auth')->name('dashboard');
+/*
+| Product Routes
+*/
+Route::middleware('auth')->group(function () {
+    Route::get('/products', [ProductController::class, 'index'])->name('products');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart');
+    Route::get('/cart/add/{id}', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::patch('/cart/{cartItem}/increase', [CartController::class, 'increase'])->name('cart.increase');
+    Route::patch('/cart/{cartItem}/decrease', [CartController::class, 'decrease'])->name('cart.decrease');
 
-Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('login');
-Route::post('/login', [App\Http\Controllers\UserController::class, 'login'])->name('loginProcess');
-Route::post('/logout', [App\Http\Controllers\UserController::class, 'logout'])->name('logout');
-Route::get('/register', [App\Http\Controllers\UserController::class, 'register'])->name('register');
-Route::post('/register-user', [App\Http\Controllers\UserController::class, 'register_user'])->name('registerUser');
+    Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+});
+/*
+| Authentication Routes
+*/
+Route::middleware('guest')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('login');
+    Route::post('/login', [UserController::class, 'login'])->name('loginProcess');
+    Route::get('/register', [UserController::class, 'register'])->name('register');
+    Route::post('/register-user', [UserController::class, 'register_user'])->name('registerUser');
+});
