@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -21,4 +21,5 @@ class ProductController extends Controller
 
         return view('products.index', compact('products', 'search'));
     }
+
 }

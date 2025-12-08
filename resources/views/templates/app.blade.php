@@ -26,14 +26,14 @@
                         <li class="nav-item">
                             {{-- panggil lewat path href="/path" --}}
                             <a class="nav-link" aria-current="page" href="/dashboard">Home</a>
-                        </li>    
-                        <li class="nav-item">
-                           {{-- panggil lewat path href="/path" --}}
-                           <a class="nav-link" aria-current="page" href="/products">Produk</a>
-                       </li>
-                    </ul>
-                    <ul class="navbar-nav ms-auto">
-                    
+                        </li>
+                         <li class="nav-item">
+                            {{-- panggil lewat path href="/path" --}}
+                            <a class="nav-link" aria-current="page" href="/products">Produk</a>
+                        </li>
+                         {{-- <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{{ route('addToCart', $product->id) }}">Cart</a>
+                        </li> --}}
                         <li class="nav-item">
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
