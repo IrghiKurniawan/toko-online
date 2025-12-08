@@ -5,17 +5,15 @@ use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CheckoutController;
 
 // Admin Routes
-Route::middleware(['auth', 'role:admin'])
-    ->prefix('admin')
-    ->name('admin.')
-    ->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         Route::post('/logout', [UserController::class, 'logout'])->name('logout');
     });
 
-// Customer Routes ✅✅✅
+// Customer Routes
 Route::middleware(['auth', 'role:customer'])->prefix('customer')->name('customer.')->group(function () {
         Route::get('/product', [ProductController::class, 'index'])->name('product');
         Route::get('/cart', [CartController::class, 'index'])->name('cart');
