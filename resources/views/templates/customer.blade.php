@@ -24,9 +24,6 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/dashboard">Home</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="{{ route('customer.product') }}">Produk</a>
                         </li>
                         <li class="nav-item">
@@ -42,7 +39,7 @@
     @endif
 
     {{-- yield : mengisi bagian content dinamis/bagian yg akan berubah-ubah di tiap halamannya --}}
-    @yield('content-costumer')
+    @yield('content-customer')
 
     <footer></footer>
 

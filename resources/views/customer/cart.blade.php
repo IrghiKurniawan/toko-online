@@ -1,6 +1,6 @@
-@extends('templates.costumer')
+@extends('templates.customer')
 
-@section('content-dinamis')
+@section('content-customer')
     <div class="container py-4">
         <h4 class="fw-bold">Cart</h4>
         <small class="text-muted">Review items before checkout</small>
@@ -47,13 +47,13 @@
                                                     <div class="input-group input-group-sm justify-content-center"
                                                         style="width: 120px;">
                                                         <button class="btn btn-outline-secondary"
-                                                            onclick="updateQty('{{ route('cart.decrease', $item->id) }}')">-</button>
+                                                            onclick="updateQty('{{ route('customer.cart.decrease', $item->id) }}')">-</button>
 
                                                         <input type="text" class="form-control text-center"
                                                             value="{{ $item->quantity }}" readonly>
 
                                                         <button class="btn btn-outline-secondary"
-                                                            onclick="updateQty('{{ route('cart.increase', $item->id) }}')">+</button>
+                                                            onclick="updateQty('{{ route('customer.cart.increase', $item->id) }}')">+</button>
                                                     </div>
                                                 </td>
 
@@ -105,7 +105,7 @@
                             Taxes and discounts calculated at checkout.
                         </small>
 
-                        <a href="{{ route('checkout') }}" class="btn btn-primary w-100">
+                        <a href="{{ route('customer.checkout') }}" class="btn btn-primary w-100">
                             Proceed to Checkout
                         </a>
                     </div>

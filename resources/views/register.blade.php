@@ -1,6 +1,6 @@
-@extends('templates.costumer')
+@extends('templates.customer')
 
-@section('content-dinamis')
+@section('content-customer')
 <div class="container mt-5" style="max-width: 450px;">
   <h3 class="text-center mb-3">Daftar Akun Baru</h3>
 

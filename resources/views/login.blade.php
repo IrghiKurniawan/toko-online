@@ -1,6 +1,6 @@
-@extends('templates.costumer')
+@extends('templates.customer')
 
-@section('content-dinamis')
+@section('content-customer')
 <div class="d-flex justify-content-center align-items-center" style="min-height:70vh; background: linear-gradient(180deg,#e9f2ff 0%, #ffffff 100%);">
   <div class="card shadow-sm" style="width:380px; border: 1px solid rgba(0,123,255,0.15); border-radius:12px;">
     <div class="card-header text-white" style="background-color:#0d6efd; border-top-left-radius:12px; border-top-right-radius:12px;">

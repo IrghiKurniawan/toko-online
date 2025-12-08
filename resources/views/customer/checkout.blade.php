@@ -1,6 +1,6 @@
-@extends('templates.app')
+@extends('templates.customer')
 
-@section('content-dinamis')
+@section('content-customer')
 <div class="container py-4">
     <h4 class="fw-bold">Checkout</h4>
 
@@ -39,7 +39,7 @@
                         <span>Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
                     </div>
 
-                    <form action="{{ route('checkout.process') }}" method="POST">
+                    <form action="{{ route('customer.checkout.process') }}" method="POST">
                         @csrf
                         <button class="btn btn-success w-100">
                             Place Order

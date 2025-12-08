@@ -34,6 +34,12 @@ class UserController extends Controller
             if ($user->role === 'customer') {
                 return redirect()->route('customer.product');
             }
+
+            // ✅ fallback kalau role aneh / null
+            Auth::logout();
+
+            return redirect()->route('')
+                ->with('error', 'Role user tidak valid.');
         }
 
         return back()->with('error', 'Email atau password salah');
@@ -66,6 +72,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'customer', // ✅ WAJIB
         ]);
 
         // Redirect ke login

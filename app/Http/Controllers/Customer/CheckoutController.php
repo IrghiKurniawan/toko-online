@@ -1,6 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use App\Models\Cart;
@@ -21,7 +22,7 @@ class CheckoutController extends Controller
 
         if (!$cart || $cart->items->count() == 0) {
             return redirect()
-                ->route('cart')
+                ->route('customer.cart')
                 ->with('error', 'Keranjang Anda kosong.');
         }
 
@@ -29,20 +30,20 @@ class CheckoutController extends Controller
             return $item->product->price * $item->quantity;
         });
 
-        return view('checkout.index', compact('cart', 'subtotal'));
+        return view('customer.checkout', compact('cart', 'subtotal'));
     }
     public function process(Request $request)
     {
-        // 
+        //
         $userId = Auth::id();
         $cart = Cart::with('items.product')
             ->where('user_id', $userId)
             ->first();
 
         if (!$cart || $cart->items->isEmpty()){
-            return redirect()->route('cart')
+            return redirect()->route('customer.cart')
                 ->with('error', 'Keranjang Anda kosong.');
-                
+
         }
         $order = Order::create([
             'user_id' => $userId,
@@ -59,7 +60,7 @@ class CheckoutController extends Controller
             ]);
         }
         $cart->items()->delete();
-        return redirect()->route('orders.index')
+        return redirect()->route('customer.order')
             ->with('success', 'Pesanan Anda telah diproses.');
     }
 }

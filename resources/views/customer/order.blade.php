@@ -1,6 +1,6 @@
-@extends('templates.app')
+@extends('templates.customer')
 
-@section('content-dinamis')
+@section('content-customer')
 <div class="container py-4">
     <h4 class="fw-bold">Order History</h4>
 

@@ -1,6 +1,6 @@
-@extends('templates.costumer')
+@extends('templates.customer')
 
-@section('content-dinamis')
+@section('content-customer')
     <div class="max-w-7xl mx-auto py-10 px-4">
 
         <h2 class="text-3xl font-bold mb-8 text-gray-800">Produk Terbaru</h2>
@@ -41,7 +41,7 @@
                             </p>
                         </div>
 
-                        <a href="{{ route('cart.add' , $product->id) }}"
+                        <a href="{{ route('customer.cart.add' , $product->id) }}"
                             class="mt-4 block w-full text-center bg-blue-600 text-white py-2 rounded-lg
                               font-medium shadow hover:bg-blue-700 hover:shadow-md transition">
                             Add to Cart
