@@ -1,4 +1,4 @@
-@extends('templates.app')
+@extends('templates.costumer')
 
 @section('content-dinamis')
 <div class="d-flex justify-content-center align-items-center" style="min-height:70vh; background: linear-gradient(180deg,#e9f2ff 0%, #ffffff 100%);">

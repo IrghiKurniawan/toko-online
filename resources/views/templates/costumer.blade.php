@@ -24,18 +24,13 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            {{-- panggil lewat path href="/path" --}}
                             <a class="nav-link" aria-current="page" href="/dashboard">Home</a>
                         </li>
-                         <li class="nav-item">
-                            {{-- panggil lewat path href="/path" --}}
-                            <a class="nav-link" aria-current="page" href="/products">Produk</a>
-                        </li>
-                         {{-- <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="{{ route('addToCart', $product->id) }}">Cart</a>
-                        </li> --}}
                         <li class="nav-item">
-                            <form action="{{ route('logout') }}" method="POST">
+                            <a class="nav-link" aria-current="page" href="{{ route('customer.product') }}">Produk</a>
+                        </li>
+                        <li class="nav-item">
+                            <form action="{{ route('customer.logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-link nav-link">Logout</button>
                             </form>
@@ -48,17 +43,17 @@
     @endif
 
     {{-- yield : mengisi bagian content dinamis/bagian yg akan berubah-ubah di tiap halamannya --}}
-    @yield('content-dinamis')
+    @yield('content-costumer')
 
     <footer></footer>
 
     {{-- CDN Bootstrap --}}
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
-        </script>
+    </script>
 
     {{-- stack : tidak wajib diisi oleh view yg extends nya (optional), kalau yield wajib diisi oleh view extends nya
     --}}

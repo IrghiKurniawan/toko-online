@@ -1,7 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+
+use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -19,7 +21,7 @@ class ProductController extends Controller
         })
             ->latest()->paginate(10);
 
-        return view('products.index', compact('products', 'search'));
+        return view('customer.product', compact('products', 'search'));
     }
 
 }

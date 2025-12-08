@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 
 class UserController extends Controller
 {
@@ -15,30 +14,45 @@ class UserController extends Controller
     {
         return view('login');
     }
+
     public function login(Request $request)
     {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        $credentials = $request->only('email', 'password');
-        if (Auth::attempt($credentials, $request->filled('remember'))) {
+
+        if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+
+            $user = Auth::user();
+
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            }
+
+            if ($user->role === 'customer') {
+                return redirect()->route('customer.product');
+            }
         }
-        return back()->with('error', 'Email atau kata sandi salah.');
+
+        return back()->with('error', 'Email atau password salah');
     }
+
     public function logout()
     {
         Auth::logout();
         request()->session()->invalidate();
         request()->session()->regenerateToken();
+
         return redirect()->route('login')->with('success', 'Anda telah logout.');
     }
+
     public function register()
     {
         return view('register');
     }
+
     public function register_user(Request $request)
     {
         $request->validate([

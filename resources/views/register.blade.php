@@ -1,4 +1,4 @@
-@extends('templates.app')
+@extends('templates.costumer')
 
 @section('content-dinamis')
 <div class="container mt-5" style="max-width: 450px;">

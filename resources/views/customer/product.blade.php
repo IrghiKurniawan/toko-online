@@ -1,4 +1,4 @@
-@extends('templates.app')
+@extends('templates.costumer')
 
 @section('content-dinamis')
     <div class="max-w-7xl mx-auto py-10 px-4">

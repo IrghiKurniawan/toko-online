@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\CartItem;
 use App\Models\Product;
@@ -46,7 +47,7 @@ class CartController extends Controller
 
     public function index()
     {
-        $cart = Cart::with('items.product')->where('user_id', auth()->id())->first();
+        $cart = Cart::with('items.product')->where('user_id', Auth::id())->first();
 
         $subtotal = 0;
 
@@ -56,7 +57,7 @@ class CartController extends Controller
             }
         }
 
-        return view('cart.index', compact('cart' , 'subtotal'));
+        return view('customer.cart', compact('cart' , 'subtotal'));
     }
 
     public function addToCart($productId)
@@ -82,7 +83,6 @@ class CartController extends Controller
             ]);
         }
 
-        return redirect()->route('cart')
-            ->with('success', 'Produk ditambahkan ke keranjang');
+        return redirect()->route('customer.cart')->with('success', 'Produk ditambahkan ke keranjang');
     }
 }
