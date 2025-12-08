@@ -105,9 +105,9 @@
                             Taxes and discounts calculated at checkout.
                         </small>
 
-                        <button class="btn btn-primary w-100">
-                            Proceed to checkout
-                        </button>
+                        <a href="{{ route('checkout') }}" class="btn btn-primary w-100">
+                            Proceed to Checkout
+                        </a>
                     </div>
                 </div>
             </div>
