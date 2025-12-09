@@ -23,7 +23,15 @@ class ProductSeeder extends Seeder
             'name' => 'Mouse Gaming',
             'price' => 250000,
             'stock' => 20,
-            'image' => 'mouse.jpg',
+            'image' => 'mouse.png',
+            'description' => 'Mouse DPI tinggi',
+        ]);
+        Product::create([
+            'category_id' => 1,
+            'name' => 'Kondom Murah',
+            'price' => 250000,
+            'stock' => 20,
+            'image' => 'Kndm.jpg',
             'description' => 'Mouse DPI tinggi',
         ]);
     }
