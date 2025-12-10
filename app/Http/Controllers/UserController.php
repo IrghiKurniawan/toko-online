@@ -9,12 +9,13 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    //
+    // Halaman login
     public function index()
     {
         return view('login');
     }
 
+    // Proses login
     public function login(Request $request)
     {
         $request->validate([
@@ -22,7 +23,7 @@ class UserController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'))) {
+        if (Auth::attempt($request->only('email', 'password'), $request->remember)) {
             $request->session()->regenerate();
 
             $user = Auth::user();
@@ -35,47 +36,48 @@ class UserController extends Controller
                 return redirect()->route('customer.product');
             }
 
-            // ✅ fallback kalau role aneh / null
+            // Fallback jika role invalid
             Auth::logout();
 
-            return redirect()->route('')
-                ->with('error', 'Role user tidak valid.');
+            return redirect('/')->with('error', 'Role user tidak valid.');
         }
 
         return back()->with('error', 'Email atau password salah');
     }
 
+    // Logout
     public function logout()
     {
         Auth::logout();
         request()->session()->invalidate();
         request()->session()->regenerateToken();
 
-        return redirect()->route('login')->with('success', 'Anda telah logout.');
+        // redirect aman ke login page
+        return redirect('/')->with('success', 'Anda telah logout.');
     }
 
+    // Halaman register
     public function register()
     {
         return view('register');
     }
 
+    // Proses register
     public function register_user(Request $request)
     {
         $request->validate([
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:4|confirmed', // password_confirmation wajib
+            'password' => 'required|min:4|confirmed',
         ]);
 
-        // Simpan ke database
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'customer', // ✅ WAJIB
+            'role' => 'customer',
         ]);
 
-        // Redirect ke login
-        return redirect()->route('login')->with('success', 'Registrasi berhasil, silakan login!');
+        return redirect('/')->with('success', 'Registrasi berhasil, silakan wlogin!');
     }
 }

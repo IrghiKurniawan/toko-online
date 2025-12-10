@@ -1,17 +1,44 @@
 <?php
 
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+// controllers admin
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\OrderAdminController;
+use App\Http\Controllers\Admin\ProductAdminController;
+// controllers customer
+
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\CheckoutController;
 use App\Http\Controllers\Customer\OrderController;
 use App\Http\Controllers\Customer\ProductController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Category Routes
+    Route::get('/category', [CategoryController::class, 'index'])->name('category');
+    Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('/category/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/category/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::put('/category/update/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/category/destroy/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    // Product Routes
+    Route::get('/product', [ProductAdminController::class, 'adminIndex'])->name('product');
+    Route::get('/product/create', [ProductAdminController::class, 'create'])->name('product.create');
+    Route::post('/product/store', [ProductAdminController::class, 'store'])->name('product.store');
+    Route::get('/product/edit/{id}', [ProductAdminController::class, 'edit'])->name('product.edit');
+    Route::put('/product/update/{id}', [ProductAdminController::class, 'update'])->name('product.update');
+    Route::delete('/product/destroy/{id}', [ProductAdminController::class, 'destroy'])->name('product.destroy');
+    // Order Routes
+    Route::get('/orders', [OrderAdminController::class, 'index'])->name('orders');
+    Route::put('/orders/update/{id}', [OrderAdminController::class, 'updateStatus'])->name('orders.update');
+
+
+    // Logout Route
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 });
 
@@ -34,6 +61,15 @@ Route::middleware('guest')->group(function () {
     Route::post('/register-user', [UserController::class, 'register_user'])->name('registerUser');
 });
 
-//login page
+// login page
 Route::get('/', [UserController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [UserController::class, 'login'])->name('loginProcess');
+
+// Redirect setelah login
+Route::get('/home', function () {
+    if (Auth::user()->role === 'admin') {
+        return redirect()->route('admin.dashboard');
+    }
+
+    return redirect()->route('customer.product');
+})->middleware('auth')->name('home');

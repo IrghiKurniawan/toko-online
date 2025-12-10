@@ -12,8 +12,10 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Category::create(['name' => 'Makanan']);
-        Category::create(['name' => 'Minuman']);
-        Category::create(['name' => 'Snack']);
+        Category::create(['name' => 'Handphone & Aksesoris']);
+        Category::create(['name' => 'Laptop & Aksesoris']);
+        Category::create(['name' => 'Komputer / Komponen']);
+        Category::create(['name' => 'Kamera']);
+        Category::create(['name' => 'Audio (headset, speaker)']);
     }
 }
