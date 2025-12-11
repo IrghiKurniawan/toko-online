@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CategorySeeder::class,  // HARUS duluan
-            ProductSeeder::class,   // baru products
             UserSeeder::class,      // bebas di akhir
         ]);
     }

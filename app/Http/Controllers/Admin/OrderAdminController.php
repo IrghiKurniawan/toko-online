@@ -10,36 +10,41 @@ class OrderAdminController extends Controller
 {
     public function index()
     {
-        $orders = Order::with('user')->latest()->paginate(10);
+        $orders = Order::with('items.product')->latest()->paginate(10);
+
+        $orders = Order::paginate(10);
 
         return view('admin.order.index', compact('orders'));
     }
 
     public function updateStatus(Request $request, $id)
     {
+        // Validasi status yang benar
         $request->validate([
-            'status' => 'required|in:pending,processing,completed,cancelled,',
+            'status' => 'required|in:pending,processing,completed,cancelled',
         ]);
 
-        $orders = order::findOrFail($id);
+        $order = Order::findOrFail($id);
 
-        // cegah status turun
+        // Alur status yang benar
         $flow = ['pending', 'processing', 'completed'];
 
+        // Cegah status mundur (hanya berlaku selain cancelled)
         if (
-            $orders->status !== 'cancel'
-            && in_array($request->status, $flow)
-            && array_search($request->status, $flow) < array_search($orders->status, $flow)
+            $order->status !== 'cancelled' &&
+            in_array($request->status, $flow) &&
+            array_search($request->status, $flow) < array_search($order->status, $flow)
         ) {
             return back()->with('error', 'Status tidak boleh mundur ❌');
         }
 
-        // STATUS DONE / CANCEL TIDAK BISA DIUBAH
-        if (in_array($orders->status, ['done', 'cancel'])) {
+        // completed atau cancelled tidak boleh diubah
+        if (in_array($order->status, ['completed', 'cancelled'])) {
             return back()->with('error', 'Order sudah final ⚠️');
         }
 
-        $orders->update([
+        // Update status
+        $order->update([
             'status' => $request->status,
         ]);
 

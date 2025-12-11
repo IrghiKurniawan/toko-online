@@ -20,8 +20,15 @@
                         @foreach ($orders as $order)
                             <tr>
                                 <td>#{{ $order->id }}</td>
-                                <td>{{ $order->name }}</td>
+
+                                <td>
+                                    @foreach ($order->items as $item)
+                                        {{ $item->product->name }} (x{{ $item->quantity }}) <br>
+                                    @endforeach
+                                </td>
+
                                 <td>Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
+
                                 <td>
                                     <form action="{{ route('admin.orders.update', $order->id) }}" method="POST"
                                         class="d-flex gap-2">
@@ -30,23 +37,14 @@
 
                                         <select name="status" class="form-select form-select-sm"
                                             {{ in_array($order->status, ['completed', 'cancelled']) ? 'disabled' : '' }}>
-
                                             <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>
-                                                Pending
-                                            </option>
-
+                                                Pending</option>
                                             <option value="processing"
-                                                {{ $order->status == 'processing' ? 'selected' : '' }}>
-                                                Processing
-                                            </option>
-
+                                                {{ $order->status == 'processing' ? 'selected' : '' }}>Processing</option>
                                             <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>
-                                                Completed
-                                            </option>
-
+                                                Completed</option>
                                             <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>
-                                                Cancelled
-                                            </option>
+                                                Cancelled</option>
                                         </select>
 
                                         @if (!in_array($order->status, ['completed', 'cancelled']))
@@ -55,11 +53,11 @@
                                             </button>
                                         @endif
                                     </form>
-
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
+
                 </table>
                 {{ $orders->links() }}
             </div>
