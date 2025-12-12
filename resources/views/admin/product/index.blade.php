@@ -14,11 +14,7 @@
                 <p class="text-muted mb-0">Kelola semua produk di toko Anda</p>
             </div>
             <div class="d-flex gap-2">
-                <button class="btn" 
-                        style="background-color: transparent; color:#002455; border: 2px solid #002455; border-radius: 10px; padding: 0.625rem 1.5rem; font-weight: 600;">
-                    <i class="fas fa-filter me-2"></i>Filter
-                </button>
-                <a href="{{ route('admin.product.create') }}" 
+                <a href="{{ route('admin.product.create') }}"
                    class="btn"
                    style="background: linear-gradient(135deg, #002455 0%, #1B3C53 100%); color:#fff; border: none; border-radius: 10px; padding: 0.625rem 1.5rem; font-weight: 600; box-shadow: 0 4px 8px rgba(0,36,85,0.2);">
                     <i class="fas fa-plus-circle me-2"></i>Tambah Produk
@@ -32,7 +28,7 @@
                 <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; border-left: 4px solid #28a745 !important;">
                     <div class="card-body p-3">
                         <div class="d-flex align-items-center">
-                            <div class="icon-wrapper me-3" 
+                            <div class="icon-wrapper me-3"
                                  style="width: 50px; height: 50px; background: rgba(40,167,69,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-check-circle fa-lg" style="color:#28a745;"></i>
                             </div>
@@ -48,7 +44,7 @@
                 <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; border-left: 4px solid #FFC107 !important;">
                     <div class="card-body p-3">
                         <div class="d-flex align-items-center">
-                            <div class="icon-wrapper me-3" 
+                            <div class="icon-wrapper me-3"
                                  style="width: 50px; height: 50px; background: rgba(255,193,7,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-layer-group fa-lg" style="color:#FFC107;"></i>
                             </div>
@@ -64,7 +60,7 @@
                 <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; border-left: 4px solid #dc3545 !important;">
                     <div class="card-body p-3">
                         <div class="d-flex align-items-center">
-                            <div class="icon-wrapper me-3" 
+                            <div class="icon-wrapper me-3"
                                  style="width: 50px; height: 50px; background: rgba(220,53,69,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-exclamation-triangle fa-lg" style="color:#dc3545;"></i>
                             </div>
@@ -85,17 +81,17 @@
                     <div class="col-lg-6">
                         <form method="GET" class="d-flex">
                             <div class="input-group">
-                                <span class="input-group-text bg-white border-end-0" 
+                                <span class="input-group-text bg-white border-end-0"
                                       style="border: 2px solid #e9ecef; border-right: none; border-radius: 10px 0 0 10px;">
                                     <i class="fas fa-search" style="color:#002455;"></i>
                                 </span>
-                                <input type="search" 
-                                       name="search" 
+                                <input type="search"
+                                       name="search"
                                        value="{{ request('search') }}"
                                        class="form-control border-start-0 border-end-0"
                                        placeholder="Cari nama produk, kategori, harga..."
                                        style="border: 2px solid #e9ecef; border-left: none; border-right: none;">
-                                <button class="btn" 
+                                <button class="btn"
                                         type="submit"
                                         style="background-color:#002455; color:#fff; border: 2px solid #002455; border-left: none; border-radius: 0 10px 10px 0;">
                                     Cari
@@ -108,7 +104,7 @@
         </div>
         @if ($products->isEmpty())
             <div class="empty-state text-center py-5">
-                <div class="card border-0 shadow-sm" 
+                <div class="card border-0 shadow-sm"
                      style="border-radius: 16px; background: linear-gradient(135deg, rgba(0,36,85,0.02) 0%, rgba(27,60,83,0.02) 100%);">
                     <div class="card-body p-5">
                         <div class="mb-4">
@@ -121,13 +117,13 @@
                             {{ request('search') ? 'Coba gunakan kata kunci pencarian yang berbeda' : 'Mulai dengan menambahkan produk pertama Anda' }}
                         </p>
                         @if(!request('search'))
-                            <a href="{{ route('admin.product.create') }}" 
+                            <a href="{{ route('admin.product.create') }}"
                                class="btn"
                                style="background: linear-gradient(135deg, #002455 0%, #1B3C53 100%); color:#fff; border: none; border-radius: 10px; padding: 0.75rem 2rem; font-weight: 600;">
                                 <i class="fas fa-plus-circle me-2"></i>Tambah Produk Pertama
                             </a>
                         @else
-                            <a href="{{ route('admin.product') }}" 
+                            <a href="{{ route('admin.product') }}"
                                class="btn"
                                style="background-color: transparent; color:#002455; border: 2px solid #002455; border-radius: 10px; padding: 0.75rem 2rem; font-weight: 600;">
                                 <i class="fas fa-arrow-left me-2"></i>Lihat Semua Produk
@@ -143,11 +139,11 @@
                         <div class="card product-card h-100 border-0 shadow-sm" style="border-radius: 16px; overflow: hidden; transition: all 0.3s ease;">
                             {{-- Product Image --}}
                             <div class="product-image-wrapper position-relative" style="height: 220px; overflow: hidden; background: linear-gradient(135deg, #002455 0%, #1B3C53 100%);">
-                                <img src="{{ asset('storage/' . $item->image) }}" 
+                                <img src="{{ asset('storage/' . $item->image) }}"
                                      alt="{{ $item->name }}"
                                      class="w-100 h-100"
                                      style="object-fit: cover; transition: transform 0.4s ease;">
-                                
+
                                 {{-- Stock Badge --}}
                                 @if($item->stock > 0)
                                     <span class="badge position-absolute top-0 end-0 m-3 px-3 py-2"
@@ -162,10 +158,10 @@
                                 @endif
 
                                 {{-- Quick View Overlay --}}
-                                <div class="quick-view-overlay position-absolute bottom-0 start-0 end-0 p-3" 
+                                <div class="quick-view-overlay position-absolute bottom-0 start-0 end-0 p-3"
                                      style="background: linear-gradient(to top, rgba(0,36,85,0.95), transparent); opacity: 0; transition: opacity 0.3s ease;">
                                     <div class="d-flex gap-2 justify-content-center">
-                                        <button class="btn btn-sm" 
+                                        <button class="btn btn-sm"
                                                 style="background-color:#fff; color:#002455; border: none; border-radius: 8px; padding: 0.5rem 1rem; font-weight: 600;">
                                             <i class="fas fa-eye me-1"></i>Detail
                                         </button>
@@ -175,12 +171,12 @@
 
                             {{-- Product Info --}}
                             <div class="card-body p-4">
-                                <h6 class="fw-bold mb-2" 
-                                    style="color:#002455; 
-                                    display: -webkit-box; 
-                                    -webkit-line-clamp: 2; 
-                                    -webkit-box-orient: vertical; 
-                                    overflow: hidden; 
+                                <h6 class="fw-bold mb-2"
+                                    style="color:#002455;
+                                    display: -webkit-box;
+                                    -webkit-line-clamp: 2;
+                                    -webkit-box-orient: vertical;
+                                    overflow: hidden;
                                     min-height: 3em;
                                     line-height: 1.5;">
                                     {{ $item->name }}
@@ -195,7 +191,7 @@
 
                                 {{-- Category Badge --}}
                                 @if($item->category)
-                                    <span class="badge mb-2" 
+                                    <span class="badge mb-2"
                                           style="background-color: rgba(0,36,85,0.1); color:#002455; border-radius: 8px; padding: 0.5rem 0.75rem; font-weight: 600;">
                                         <i class="fas fa-tag me-1"></i>{{ $item->category->name }}
                                     </span>
@@ -205,7 +201,7 @@
                             {{-- Card Footer Actions --}}
                             <div class="card-footer bg-white border-0 p-3 pt-0">
                                 <div class="d-grid gap-2">
-                                    <a href="{{ route('admin.product.edit', $item->id) }}" 
+                                    <a href="{{ route('admin.product.edit', $item->id) }}"
                                        class="btn btn-sm edit-btn"
                                        style="background-color: transparent; color:#002455; border: 2px solid #002455; border-radius: 10px; padding: 0.625rem; font-weight: 600; transition: all 0.3s ease;">
                                         <i class="fas fa-edit me-1"></i>Edit Produk
@@ -218,9 +214,9 @@
                                     </button>
                                 </div>
 
-                                <form id="delete-form-{{ $item->id }}" 
-                                      action="{{ route('admin.product.destroy', $item->id) }}" 
-                                      method="POST" 
+                                <form id="delete-form-{{ $item->id }}"
+                                      action="{{ route('admin.product.destroy', $item->id) }}"
+                                      method="POST"
                                       style="display: none;">
                                     @csrf
                                     @method('DELETE')
@@ -253,13 +249,13 @@
                     </p>
                 </div>
                 <div class="modal-footer border-0 justify-content-center pb-4">
-                    <button type="button" 
-                            class="btn" 
+                    <button type="button"
+                            class="btn"
                             data-bs-dismiss="modal"
                             style="background-color: transparent; color:#002455; border: 2px solid #002455; border-radius: 10px; padding: 0.625rem 1.5rem; font-weight: 600;">
                         <i class="fas fa-times me-2"></i>Batal
                     </button>
-                    <button type="button" 
+                    <button type="button"
                             id="confirmDeleteBtn"
                             class="btn"
                             style="background-color: #dc3545; color:#fff; border: none; border-radius: 10px; padding: 0.625rem 1.5rem; font-weight: 600; box-shadow: 0 4px 8px rgba(220,53,69,0.3);">
@@ -377,7 +373,7 @@
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.view-toggle').forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                
+
                 const view = this.dataset.view;
                 // Implement view change logic here
                 console.log('Switched to ' + view + ' view');

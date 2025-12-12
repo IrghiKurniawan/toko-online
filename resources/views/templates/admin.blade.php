@@ -466,7 +466,7 @@
                 <i class="fas fa-user"></i>
             </div>
             <div class="user-info">
-                <div class="user-name">Administrator</div>
+                <div class="user-name">{{ Auth::user()->name }}</div>
                 <div class="user-role">Admin</div>
             </div>
         </div>
@@ -513,7 +513,7 @@
 
             <div class="nav-item">
                 <a class="nav-link {{ request()->routeIs('admin.admin.account*') ? 'active' : '' }}"
-                    href="{{ route('admin.admin.account.data') }}">
+                    href="{{ route('admin.account.data') }}">
                     <i class="fas fa-user-cog"></i>
                     <span>Account</span>
                 </a>
@@ -532,10 +532,23 @@
         </div>
     </aside>
 
-    
-
     {{-- MAIN CONTENT --}}
     <main class="main-content">
+
+        {{-- Alert Bootstrap --}}
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
+                <strong>Sukses!</strong> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show mt-2" role="alert">
+                <strong>Gagal!</strong> {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
         @yield('content-admin')
     </main>
 
@@ -543,7 +556,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-        </script>
+    </script>
 
     <script>
         // Toggle Sidebar
@@ -551,7 +564,7 @@
         const toggleBtn = document.getElementById('toggleSidebar');
         const toggleIcon = toggleBtn.querySelector('i');
 
-        toggleBtn.addEventListener('click', function () {
+        toggleBtn.addEventListener('click', function() {
             sidebar.classList.toggle('collapsed');
 
             if (sidebar.classList.contains('collapsed')) {
@@ -577,12 +590,12 @@
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
 
-        mobileMenuBtn.addEventListener('click', function () {
+        mobileMenuBtn.addEventListener('click', function() {
             sidebar.classList.add('show');
             sidebarOverlay.classList.add('show');
         });
 
-        sidebarOverlay.addEventListener('click', function () {
+        sidebarOverlay.addEventListener('click', function() {
             sidebar.classList.remove('show');
             sidebarOverlay.classList.remove('show');
         });
@@ -590,7 +603,7 @@
         // Close sidebar when clicking nav link on mobile
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
-            link.addEventListener('click', function () {
+            link.addEventListener('click', function() {
                 if (window.innerWidth <= 768) {
                     sidebar.classList.remove('show');
                     sidebarOverlay.classList.remove('show');

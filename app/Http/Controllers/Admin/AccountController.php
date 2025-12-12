@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
@@ -17,7 +17,7 @@ class AccountController extends Controller
         $search = $request->input('cari');
 
         $users = User::when($search, function ($query, $search) {
-            return $query->where('name', 'like', '%' . $search . '%');
+            return $query->where('name', 'like', '%'.$search.'%');
         })->paginate(10);
 
         return view('admin.account.index', compact('users'));
@@ -37,24 +37,22 @@ class AccountController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'  => 'required|string|max:255',
+            'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'role'  => 'required|in:admin,customer',
+            'role' => 'required|in:admin,customer',
         ]);
 
         // Generate password otomatis
-        $password = strtolower(substr($request->name, 0, 3) . substr($request->email, 0, 3));
+        $password = strtolower(substr($request->name, 0, 3).substr($request->email, 0, 3));
 
         User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'role'     => $request->role,
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
             'password' => Hash::make($password),
         ]);
 
-        return redirect()
-            ->route('admin.admin.account.data')
-            ->with('success', 'Akun berhasil ditambahkan! Password default: <b>' . $password . '</b>');
+        return redirect()->route('admin.account.data')->with('success', 'Akun berhasil ditambahkan!');
     }
 
     // ==============================
@@ -72,29 +70,26 @@ class AccountController extends Controller
     // ==============================
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|max:255|unique:users,email,' . $id,
-            'role'     => 'required|in:admin,customer',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,'.$id,
+            'role' => 'required|in:admin,customer',
             'password' => 'nullable|min:6',
         ]);
 
         $user = User::findOrFail($id);
 
-        $user->name  = $request->name;
-        $user->email = $request->email;
-        $user->role  = $request->role;
-
-        // Update password jika diisi
+        // Jika password dikosongkan → jangan ikut dimasukkan ke update
         if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
+            $validated['password'] = Hash::make($request->password);
+        } else {
+            unset($validated['password']); // hapus biar tidak overwrite
         }
 
-        $user->save();
+        // Update langsung semua field yang sudah aman
+        $user->update($validated);
 
-        return redirect()
-            ->route('admin.admin.account.data')
-            ->with('success', 'Akun berhasil diperbarui.');
+        return redirect()->route('admin.account.data')->with('success', 'Akun berhasil diperbarui.');
     }
 
     // ==============================
@@ -105,8 +100,6 @@ class AccountController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()
-            ->route('admin.admin.account.data')
-            ->with('success', 'Akun berhasil dihapus.');
+        return redirect()->route('admin.account.data')->with('success', 'Akun berhasil dihapus.');
     }
 }

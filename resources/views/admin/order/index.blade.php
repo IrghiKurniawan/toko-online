@@ -13,79 +13,77 @@
                 </h2>
                 <p class="text-muted mb-0">Kelola dan pantau semua pesanan pelanggan</p>
             </div>
-            <div class="d-flex gap-2">
-                <button class="btn"
-                        style="background-color: transparent; color:#002455; border: 2px solid #002455; border-radius: 10px; padding: 0.625rem 1.5rem; font-weight: 600;">
-                    <i class="fas fa-file-export me-2"></i>Export
-                </button>
-                <button class="btn"
-                        style="background: linear-gradient(135deg, #002455 0%, #1B3C53 100%); color:#fff; border: none; border-radius: 10px; padding: 0.625rem 1.5rem; font-weight: 600; box-shadow: 0 4px 8px rgba(0,36,85,0.2);">
-                    <i class="fas fa-filter me-2"></i>Filter
-                </button>
-            </div>
         </div>
 
         {{-- Status Summary Cards --}}
         <div class="row g-3 mb-4">
             <div class="col-lg-3 col-md-6">
-                <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; border-left: 4px solid #ffc107 !important;">
+                <div class="card border-0 shadow-sm h-100"
+                    style="border-radius: 12px; border-left: 4px solid #ffc107 !important;">
                     <div class="card-body p-3">
                         <div class="d-flex align-items-center">
                             <div class="icon-wrapper me-3"
-                                 style="width: 50px; height: 50px; background: rgba(255,193,7,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                style="width: 50px; height: 50px; background: rgba(255,193,7,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-clock fa-lg" style="color:#FFC107;"></i>
                             </div>
                             <div>
                                 <small class="text-muted d-block">Pending</small>
-                                <h4 class="fw-bold mb-0" style="color:#002455;">{{ $orders->where('status', 'pending')->count() }}</h4>
+                                <h4 class="fw-bold mb-0" style="color:#002455;">
+                                    {{ $orders->where('status', 'pending')->count() }}</h4>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; border-left: 4px solid #17a2b8 !important;">
+                <div class="card border-0 shadow-sm h-100"
+                    style="border-radius: 12px; border-left: 4px solid #17a2b8 !important;">
                     <div class="card-body p-3">
                         <div class="d-flex align-items-center">
                             <div class="icon-wrapper me-3"
-                                 style="width: 50px; height: 50px; background: rgba(23,162,184,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                style="width: 50px; height: 50px; background: rgba(23,162,184,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-sync-alt fa-lg" style="color:#17a2b8;"></i>
                             </div>
                             <div>
                                 <small class="text-muted d-block">Processing</small>
-                                <h4 class="fw-bold mb-0" style="color:#002455;">{{ $orders->where('status', 'processing')->count() }}</h4>
+                                <h4 class="fw-bold mb-0" style="color:#002455;">
+                                    {{ $orders->where('status', 'processing')->count() }}</h4>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; border-left: 4px solid #28a745 !important;">
+                <div class="card border-0 shadow-sm h-100"
+                    style="border-radius: 12px; border-left: 4px solid #28a745 !important;">
                     <div class="card-body p-3">
                         <div class="d-flex align-items-center">
                             <div class="icon-wrapper me-3"
-                                 style="width: 50px; height: 50px; background: rgba(40,167,69,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                style="width: 50px; height: 50px; background: rgba(40,167,69,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-check-circle fa-lg" style="color:#28a745;"></i>
                             </div>
                             <div>
                                 <small class="text-muted d-block">Completed</small>
-                                <h4 class="fw-bold mb-0" style="color:#002455;">{{ $orders->where('status', 'completed')->count() }}</h4>
+                                <h4 class="fw-bold mb-0" style="color:#002455;">
+                                    {{ $orders->where('status', 'completed')->count() }}</h4>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                <div class="card border-0 shadow-sm h-100" style="border-radius: 12px; border-left: 4px solid #dc3545 !important;">
+                <div class="card border-0 shadow-sm h-100"
+                    style="border-radius: 12px; border-left: 4px solid #dc3545 !important;">
                     <div class="card-body p-3">
                         <div class="d-flex align-items-center">
                             <div class="icon-wrapper me-3"
-                                 style="width: 50px; height: 50px; background: rgba(220,53,69,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                                style="width: 50px; height: 50px; background: rgba(220,53,69,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
                                 <i class="fas fa-times-circle fa-lg" style="color:#dc3545;"></i>
                             </div>
                             <div>
                                 <small class="text-muted d-block">Cancelled</small>
-                                <h4 class="fw-bold mb-0" style="color:#002455;">{{ $orders->where('status', 'cancelled')->count() }}</h4>
+                                <h4 class="fw-bold mb-0" style="color:#002455;">
+                                    {{ $orders->where('status', 'cancelled')->count() }}</h4>
                             </div>
                         </div>
                     </div>
@@ -101,13 +99,19 @@
                         <i class="fas fa-list me-2" style="color:#FFC107;"></i>
                         Daftar Pesanan
                     </h5>
-                    <div class="input-group" style="width: 300px;">
-                        <span class="input-group-text bg-white border-end-0" style="border: 2px solid #e9ecef; border-right: none; border-radius: 10px 0 0 10px;">
-                            <i class="fas fa-search" style="color:#002455;"></i>
-                        </span>
-                        <input type="text" class="form-control border-start-0" placeholder="Cari order..."
-                               style="border: 2px solid #e9ecef; border-left: none; border-radius: 0 10px 10px 0;">
-                    </div>
+                    <form action="{{ route('admin.orders') }}" method="GET" class="d-flex">
+                        <div class="input-group" style="width: 300px;">
+                            <span class="input-group-text bg-white border-end-0"
+                                style="border: 2px solid #e9ecef; border-right: none; border-radius: 10px 0 0 10px;">
+                                <i class="fas fa-search" style="color:#002455;"></i>
+                            </span>
+
+                            <input type="text" name="search" value="{{ request('search') }}"
+                                class="form-control border-start-0" placeholder="Cari order..."
+                                style="border: 2px solid #e9ecef; border-left: none; border-radius: 0 10px 10px 0;">
+                        </div>
+                    </form>
+
                 </div>
             </div>
             <div class="card-body p-0">
@@ -120,6 +124,9 @@
                                 </th>
                                 <th class="border-0 px-4 py-3" style="color:#002455; font-weight: 600;">
                                     <i class="fas fa-user me-2" style="color:#FFC107;"></i>Customer
+                                </th>
+                                <th class="border-0 px-4 py-3" style="color:#002455; font-weight: 600;">
+                                    <i class="fas fa-box-open me-2" style="color:#FFC107;"></i>Name Product
                                 </th>
                                 <th class="border-0 px-4 py-3" style="color:#002455; font-weight: 600;">
                                     <i class="fas fa-money-bill-wave me-2" style="color:#FFC107;"></i>Total
@@ -136,17 +143,33 @@
                             @forelse ($orders as $order)
                                 <tr class="order-row" style="transition: all 0.3s ease;">
                                     <td class="px-4 py-3">
-                                        <span class="fw-bold" style="color:#002455;">#{{ str_pad($order->id, 6, '0', STR_PAD_LEFT) }}</span>
+                                        <span class="fw-bold"
+                                            style="color:#002455;">#{{ str_pad($order->id, 6, '0', STR_PAD_LEFT) }}</span>
                                     </td>
                                     <td class="px-4 py-3">
                                         <div class="d-flex align-items-center">
                                             <div class="customer-avatar me-2"
-                                                 style="width: 40px; height: 40px; background: linear-gradient(135deg, #FFC107 0%, #FFD54F 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color:#002455; font-weight: 700; font-size: 0.875rem;">
-                                                {{ strtoupper(substr($order->name ?? 'U', 0, 1)) }}
+                                                style="width: 40px; height: 40px; background: linear-gradient(135deg, #FFC107 0%, #FFD54F 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color:#002455; font-weight: 700; font-size: 0.875rem;">
+                                                {{ strtoupper(substr($order->user->name ?? 'U', 0, 1)) }}
                                             </div>
                                             <div>
-                                                <div class="fw-semibold" style="color:#002455;">{{ $order->name ?? 'Unknown' }}</div>
-                                                <small class="text-muted">{{ $order->created_at->format('d M Y, H:i') }}</small>
+                                                <div class="fw-semibold" style="color:#002455;">
+                                                    {{ $order->user->name ?? 'Unknown' }}</div>
+                                                <small
+                                                    class="text-muted">{{ $order->created_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }}
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <div class="d-flex align-items-center">
+
+                                            <div class="fw-semibold" style="color:#002455;">
+                                                @foreach ($order->items as $item)
+                                                    {{ $item->product->name ?? 'Unknown Product' }}
+                                                    (x{{ $item->quantity }})
+                                                    <br>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </td>
@@ -156,39 +179,42 @@
                                         </span>
                                     </td>
                                     <td class="px-4 py-3">
-                                        <form action="{{ route('admin.orders.update', $order->id) }}" method="POST" class="status-form">
+                                        <form action="{{ route('admin.orders.update', $order->id) }}" method="POST"
+                                            class="status-form">
                                             @csrf
                                             @method('PUT')
 
                                             <div class="d-flex align-items-center gap-2">
-                                                <select name="status"
-                                                        class="form-select form-select-sm status-select"
-                                                        style="border: 2px solid #e9ecef; border-radius: 8px; font-weight: 600; padding: 0.5rem; max-width: 150px;"
-                                                        {{ in_array($order->status, ['completed', 'cancelled']) ? 'disabled' : '' }}
-                                                        onchange="updateStatusStyle(this)">
-                                                    <option value="pending" {{ $order->status == 'pending' ? 'selected' : '' }}>
+                                                <select name="status" class="form-select form-select-sm status-select"
+                                                    style="border: 2px solid #e9ecef; border-radius: 8px; font-weight: 600; padding: 0.5rem; max-width: 150px;"
+                                                    {{ in_array($order->status, ['completed', 'cancelled']) ? 'disabled' : '' }}
+                                                    onchange="updateStatusStyle(this)">
+                                                    <option value="pending"
+                                                        {{ $order->status == 'pending' ? 'selected' : '' }}>
                                                         ⏳ Pending
                                                     </option>
-                                                    <option value="processing" {{ $order->status == 'processing' ? 'selected' : '' }}>
+                                                    <option value="processing"
+                                                        {{ $order->status == 'processing' ? 'selected' : '' }}>
                                                         🔄 Processing
                                                     </option>
-                                                    <option value="completed" {{ $order->status == 'completed' ? 'selected' : '' }}>
+                                                    <option value="completed"
+                                                        {{ $order->status == 'completed' ? 'selected' : '' }}>
                                                         ✅ Completed
                                                     </option>
-                                                    <option value="cancelled" {{ $order->status == 'cancelled' ? 'selected' : '' }}>
+                                                    <option value="cancelled"
+                                                        {{ $order->status == 'cancelled' ? 'selected' : '' }}>
                                                         ❌ Cancelled
                                                     </option>
                                                 </select>
 
                                                 @if (!in_array($order->status, ['completed', 'cancelled']))
-                                                    <button type="submit"
-                                                            class="btn btn-sm save-btn"
-                                                            style="background-color: #002455; color:#fff; border: none; border-radius: 8px; padding: 0.5rem 1rem; font-weight: 600; transition: all 0.3s ease;">
+                                                    <button type="submit" class="btn btn-sm save-btn"
+                                                        style="background-color: #002455; color:#fff; border: none; border-radius: 8px; padding: 0.5rem 1rem; font-weight: 600; transition: all 0.3s ease;">
                                                         <i class="fas fa-save me-1"></i>Save
                                                     </button>
                                                 @else
                                                     <span class="badge px-3 py-2"
-                                                          style="background-color: {{ $order->status == 'completed' ? '#28a745' : '#dc3545' }}; border-radius: 8px;">
+                                                        style="background-color: {{ $order->status == 'completed' ? '#28a745' : '#dc3545' }}; border-radius: 8px;">
                                                         <i class="fas fa-lock me-1"></i>Locked
                                                     </span>
                                                 @endif
@@ -198,15 +224,20 @@
                                     <td class="px-4 py-3">
                                         <div class="d-flex gap-2">
                                             <button class="btn btn-sm action-btn"
-                                                    style="background-color: transparent; color:#002455; border: 2px solid #002455; border-radius: 8px; padding: 0.375rem 0.75rem; font-weight: 600; transition: all 0.3s ease;"
-                                                    title="View Details">
+                                                style="background-color: transparent; color:#002455; border: 2px solid #002455; border-radius: 8px; padding: 0.375rem 0.75rem; font-weight: 600; transition: all 0.3s ease;"
+                                                title="View Details">
                                                 <i class="fas fa-eye"></i>
                                             </button>
-                                            <button class="btn btn-sm action-btn"
+                                            <form action="{{ route('admin.orders.destroy', $order->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="btn btn-sm action-btn"
                                                     style="background-color: transparent; color:#dc3545; border: 2px solid #dc3545; border-radius: 8px; padding: 0.375rem 0.75rem; font-weight: 600; transition: all 0.3s ease;"
                                                     title="Delete">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>
@@ -216,7 +247,8 @@
                                         <div class="empty-state">
                                             <i class="fas fa-inbox fa-3x mb-3" style="color:#002455; opacity: 0.3;"></i>
                                             <h5 class="fw-bold mb-2" style="color:#002455;">Belum Ada Pesanan</h5>
-                                            <p class="text-muted">Pesanan akan muncul di sini setelah pelanggan melakukan pembelian</p>
+                                            <p class="text-muted">Pesanan akan muncul di sini setelah pelanggan melakukan
+                                                pembelian</p>
                                         </div>
                                     </td>
                                 </tr>
@@ -226,7 +258,7 @@
                 </div>
             </div>
 
-            @if($orders->hasPages())
+            @if ($orders->hasPages())
                 <div class="card-footer bg-white border-0" style="padding: 1.5rem; border-radius: 0 0 16px 16px;">
                     {{ $orders->links('pagination::bootstrap-5') }}
                 </div>
@@ -237,7 +269,7 @@
     <style>
         /* Order Row Hover */
         .order-row:hover {
-            background-color: rgba(0,36,85,0.02);
+            background-color: rgba(0, 36, 85, 0.02);
             transform: translateX(5px);
         }
 
@@ -271,13 +303,13 @@
         .save-btn:hover {
             background-color: #1B3C53 !important;
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,36,85,0.3);
+            box-shadow: 0 4px 8px rgba(0, 36, 85, 0.3);
         }
 
         /* Action Button Hover */
         .action-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .action-btn:first-child:hover {
@@ -297,7 +329,7 @@
 
         .order-row:hover .customer-avatar {
             transform: scale(1.1);
-            box-shadow: 0 4px 8px rgba(255,193,7,0.3);
+            box-shadow: 0 4px 8px rgba(255, 193, 7, 0.3);
         }
 
         /* Pagination Styling */
@@ -314,7 +346,7 @@
         .pagination .page-item.active .page-link {
             background: linear-gradient(135deg, #002455 0%, #1B3C53 100%);
             border-color: #002455;
-            box-shadow: 0 4px 8px rgba(0,36,85,0.3);
+            box-shadow: 0 4px 8px rgba(0, 36, 85, 0.3);
         }
 
         .pagination .page-link:hover {

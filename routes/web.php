@@ -37,14 +37,15 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Order Routes
     Route::get('/orders', [OrderAdminController::class, 'index'])->name('orders');
     Route::put('/orders/update/{id}', [OrderAdminController::class, 'updateStatus'])->name('orders.update');
+    Route::delete('/order/destroy/{id}', [OrderAdminController::class, 'destroy'])->name('orders.destroy');
 
-    Route::prefix('admin/account')->name('admin.account.')->group(function () {
-        Route::get('/', [AccountController::class, 'index'])->name('data');
-        Route::get('/create', [AccountController::class, 'create'])->name('create');
-        Route::post('/store', [AccountController::class, 'store'])->name('store');
-        Route::get('/edit/{id}', [AccountController::class, 'edit'])->name('edit');
-        Route::put('/update/{id}', [AccountController::class, 'update'])->name('update');
-        Route::delete('/delete/{id}', [AccountController::class, 'destroy'])->name('delete');
+    Route::prefix('account')->name('account.')->group(function () {
+        Route::get('/account', [AccountController::class, 'index'])->name('data');
+        Route::get('/account/create', [AccountController::class, 'create'])->name('create');
+        Route::post('/account/store', [AccountController::class, 'store'])->name('store');
+        Route::get('/account/edit/{id}', [AccountController::class, 'edit'])->name('edit');
+        Route::put('/account/update/{id}', [AccountController::class, 'update'])->name('update');
+        Route::delete('/account/delete/{id}', [AccountController::class, 'destroy'])->name('delete');
     });
 
 

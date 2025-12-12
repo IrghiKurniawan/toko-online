@@ -1,4 +1,4 @@
-<?php 
+<?php
 use App\Models\User;
 $username = Auth::User()->name;
 ?>
@@ -9,10 +9,10 @@ $username = Auth::User()->name;
 @section('content-admin')
 <div class="container-fluid">
     {{-- Welcome Banner --}}
-    <div class="welcome-banner mb-4" 
-         style="background: linear-gradient(135deg, #002455 0%, #1B3C53 100%); 
-                border-radius: 16px; 
-                padding: 2rem; 
+    <div class="welcome-banner mb-4"
+         style="background: linear-gradient(135deg, #002455 0%, #1B3C53 100%);
+                border-radius: 16px;
+                padding: 2rem;
                 color: #fff;
                 box-shadow: 0 4px 12px rgba(0,36,85,0.15);
                 position: relative;
@@ -30,7 +30,7 @@ $username = Auth::User()->name;
                 </div>
             </div>
         </div>
-        
+
         {{-- Decorative Elements --}}
         <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background-color: rgba(255,193,7,0.1); border-radius: 50%;"></div>
         <div style="position: absolute; bottom: -30px; left: -30px; width: 150px; height: 150px; background-color: rgba(255,193,7,0.05); border-radius: 50%;"></div>
@@ -45,25 +45,25 @@ $username = Auth::User()->name;
                 </div>
                 <div class="card-body p-4">
                     <div class="d-grid gap-2">
-                        <a href="{{ route('admin.product') }}" 
+                        <a href="{{ route('admin.product') }}"
                            class="btn quick-action-btn text-start"
                            style="background-color: #f8f9fa; border: 2px solid #e9ecef; color:#002455; border-radius: 10px; padding: 1rem; font-weight: 600; transition: all 0.3s ease;">
                             <i class="fas fa-plus-circle me-2" style="color:#FFC107;"></i>
                             Tambah Produk Baru
                         </a>
-                        <a href="{{ route('admin.category') }}" 
+                        <a href="{{ route('admin.category') }}"
                            class="btn quick-action-btn text-start"
                            style="background-color: #f8f9fa; border: 2px solid #e9ecef; color:#002455; border-radius: 10px; padding: 1rem; font-weight: 600; transition: all 0.3s ease;">
                             <i class="fas fa-layer-group me-2" style="color:#FFC107;"></i>
                             Kelola Kategori
                         </a>
-                        <a href="{{ route('admin.orders') }}" 
+                        <a href="{{ route('admin.orders') }}"
                            class="btn quick-action-btn text-start"
                            style="background-color: #f8f9fa; border: 2px solid #e9ecef; color:#002455; border-radius: 10px; padding: 1rem; font-weight: 600; transition: all 0.3s ease;">
                             <i class="fas fa-clipboard-list me-2" style="color:#FFC107;"></i>
                             Lihat Semua Pesanan
                         </a>
-                        <a href="{{ route('admin.admin.account.data') }}" 
+                        <a href="{{ route('admin.account.data') }}"
                            class="btn quick-action-btn text-start"
                            style="background-color: #f8f9fa; border: 2px solid #e9ecef; color:#002455; border-radius: 10px; padding: 1rem; font-weight: 600; transition: all 0.3s ease;">
                             <i class="fas fa-user-cog me-2" style="color:#FFC107;"></i>

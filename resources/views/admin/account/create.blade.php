@@ -5,7 +5,7 @@
 
         <h3 class="mb-3">Tambah Akun</h3>
 
-        <form action="{{ route('admin.admin.account.store') }}" method="POST">
+        <form action="{{ route('admin.account.store') }}" method="POST">
             @csrf
 
             <div class="mb-3">
@@ -31,7 +31,7 @@
             </div>
 
             <button class="btn btn-primary">Simpan</button>
-            <a href="{{ route('admin.admin.account.data') }}" class="btn btn-secondary">Kembali</a>
+            <a href="{{ route('admin.account.data') }}" class="btn btn-secondary">Kembali</a>
         </form>
 
     </div>

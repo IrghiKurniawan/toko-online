@@ -8,13 +8,21 @@ use Illuminate\Http\Request;
 
 class OrderAdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::with('items.product')->latest()->paginate(10);
+        $search = $request->query('search');
 
-        $orders = Order::paginate(10);
+        $orders = Order::with('items.product', 'user')
+            ->when($search, function ($query) use ($search) {
+                $query->whereHas('user', function ($q) use ($search) {
+                    $q->where('name', 'LIKE', '%'.$search.'%');
+                });
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
-        return view('admin.order.index', compact('orders'));
+        return view('admin.order.index', compact('orders', 'search'));
     }
 
     public function updateStatus(Request $request, $id)
@@ -49,5 +57,13 @@ class OrderAdminController extends Controller
         ]);
 
         return back()->with('success', 'Status order berhasil diperbarui ✅');
+    }
+
+    public function destroy($id)
+    {
+        $orders = Order::findOrFail($id);
+        $orders->delete();
+
+        return redirect()->back()->with('success', 'berhasil menghapus data order');
     }
 }
