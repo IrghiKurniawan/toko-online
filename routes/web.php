@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderAdminController;
 use App\Http\Controllers\Admin\ProductAdminController;
+use App\Http\Controllers\Admin\AccountController;
 // controllers customer
 
 use App\Http\Controllers\Customer\CartController;
@@ -36,6 +37,16 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Order Routes
     Route::get('/orders', [OrderAdminController::class, 'index'])->name('orders');
     Route::put('/orders/update/{id}', [OrderAdminController::class, 'updateStatus'])->name('orders.update');
+
+    Route::prefix('admin/account')->name('admin.account.')->group(function () {
+        Route::get('/', [AccountController::class, 'index'])->name('data');
+        Route::get('/create', [AccountController::class, 'create'])->name('create');
+        Route::post('/store', [AccountController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [AccountController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [AccountController::class, 'update'])->name('update');
+        Route::delete('/delete/{id}', [AccountController::class, 'destroy'])->name('delete');
+    });
+
 
 
     // Logout Route
