@@ -6,7 +6,7 @@
         $statusDisplay = [
             'pending' => [
                 'icon' => 'fas fa-clock',
-                'text' => 'Menunggu Pembayaran',
+                'text' => 'Pending',
                 'color' => '#FFC107',
                 'bg' => 'rgba(255,193,7,0.2)',
             ],
