@@ -71,6 +71,5 @@ Relasi utama dalam sistem:
 - **PHP 8**
 - **MySQL**
 - **Bootstrap**
-- Laravel Breeze (Authentication)
 
 ---
