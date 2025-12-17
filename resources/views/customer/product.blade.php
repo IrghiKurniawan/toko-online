@@ -22,7 +22,7 @@
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
-                
+
                 <div class="ms-2">
                     <a href="{{ route('customer.cart') }}"
                         class="btn px-4 shadow-sm h-100 d-flex align-items-center justify-content-center"
@@ -51,7 +51,7 @@
 
                             <div class="position-relative overflow-hidden"
                                 style="height:240px; background: linear-gradient(135deg, #002455 0%, #1B3C53 100%);">
-                                <img src="{{ asset('storage/' . $product->image) }}" class="card-img-top h-100 w-100"
+                                <img src="{{ Storage::url($product->image) }}" class="card-img-top h-100 w-100"
                                     style="object-fit:cover; transition: transform 0.4s ease;" alt="{{ $product->name }}"
                                     loading="lazy">
 

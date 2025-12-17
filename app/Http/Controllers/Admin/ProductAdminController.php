@@ -16,7 +16,7 @@ class ProductAdminController extends Controller
 
         $products = Product::when($search, function ($query) use ($search) {
             $query->where('name', 'LIKE', '%'.$search.'%');
-        })->latest()->get();
+        })->latest()->paginate(10);
 
         return view('admin.product.index', compact('products', 'search'));
     }
@@ -30,24 +30,56 @@ class ProductAdminController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'description' => 'nullable|string',
+            'name' => 'required|string|max:255|min:3',
+            'price' => 'required|numeric|min:100|max:1000000000',
+            'stock' => 'required|integer|min:0|max:99999',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'description' => 'nullable|string|max:2000',
+        ], [
+            // Custom error messages
+            'category_id.required' => 'Pilih kategori produk.',
+            'category_id.exists' => 'Kategori tidak valid.',
+
+            'name.required' => 'Nama produk wajib diisi.',
+            'name.min' => 'Nama produk minimal 3 karakter.',
+            'name.max' => 'Nama produk maksimal 255 karakter.',
+
+            'price.required' => 'Harga produk wajib diisi.',
+            'price.numeric' => 'Harga harus berupa angka.',
+            'price.min' => 'Harga minimal Rp 100.',
+            'price.max' => 'Harga terlalu besar.',
+
+            'stock.required' => 'Stok produk wajib diisi.',
+            'stock.integer' => 'Stok harus bilangan bulat.',
+            'stock.min' => 'Stok tidak boleh minus.',
+            'stock.max' => 'Stok terlalu besar.',
+
+            'image.required' => 'Gambar produk wajib diupload.',
+            'image.image' => 'File harus berupa gambar.',
+            'image.mimes' => 'Format gambar harus: jpeg, png, jpg, gif, atau webp.',
+            'image.max' => 'Ukuran gambar maksimal 5MB.',
+
+            'description.max' => 'Deskripsi maksimal 2000 karakter.',
         ]);
 
-        // upload image ke storage
+        // Upload image
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            $validatedData['image'] = $path;
+            $path = $request->file('image')->store('images/products', 'public');
         }
 
-        Product::create($validatedData);
+        Product::create([
+            'category_id' => $request->category_id,
+            'name' => $request->name,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'image' => $path,
+            'description' => $request->description,
+        ]);
 
-        return redirect()->route('admin.product')->with('success', 'Product created successfully.');
+        return redirect()->route('admin.product')
+            ->with('success', 'Produk berhasil ditambahkan.');
     }
 
     public function edit($id)
@@ -62,42 +94,79 @@ class ProductAdminController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        $validated = $request->validate([
+        $request->validate([
             'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'description' => 'nullable|string',
+            'name' => 'required|string|max:255|min:3',
+            'price' => 'required|numeric|min:100|max:1000000000',
+            'stock' => 'required|integer|min:0|max:99999',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'description' => 'nullable|string|max:2000',
+        ], [
+            // Custom error messages
+            'category_id.required' => 'Pilih kategori produk.',
+            'category_id.exists' => 'Kategori tidak valid.',
+
+            'name.required' => 'Nama produk wajib diisi.',
+            'name.min' => 'Nama produk minimal 3 karakter.',
+            'name.max' => 'Nama produk maksimal 255 karakter.',
+
+            'price.required' => 'Harga produk wajib diisi.',
+            'price.numeric' => 'Harga harus berupa angka.',
+            'price.min' => 'Harga minimal Rp 100.',
+            'price.max' => 'Harga terlalu besar.',
+
+            'stock.required' => 'Stok produk wajib diisi.',
+            'stock.integer' => 'Stok harus bilangan bulat.',
+            'stock.min' => 'Stok tidak boleh minus.',
+            'stock.max' => 'Stok terlalu besar.',
+
+            'image.image' => 'File harus berupa gambar.',
+            'image.mimes' => 'Format gambar harus: jpeg, png, jpg, gif, atau webp.',
+            'image.max' => 'Ukuran gambar maksimal 5MB.',
+
+            'description.max' => 'Deskripsi maksimal 2000 karakter.',
         ]);
 
-        // replace image jika ada upload baru
+        $data = [
+            'category_id' => $request->category_id,
+            'name' => $request->name,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'description' => $request->description,
+        ];
+
+        // Update image if new one uploaded
         if ($request->hasFile('image')) {
-            //   Hapus gambar lama jika ada
+            // Delete old image
             if ($product->image && Storage::disk('public')->exists($product->image)) {
                 Storage::disk('public')->delete($product->image);
             }
 
-            $path = $request->file('image')->store('products', 'public');
-            $validated['image'] = $path;
+            $path = $request->file('image')->store('images/products', 'public');
+            $data['image'] = $path;
         }
 
-        $product->update($validated);
+        $product->update($data);
 
-        return redirect()->route('admin.product')->with('success', 'Product updated successfully.');
+        return redirect()->route('admin.product')
+            ->with('success', 'Produk berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
 
-        // Hapus gambar dari storage jika ada
+        // Cek apakah produk masih ada di keranjang atau pesanan
+        // (opsional, tergantung kebutuhan)
+
+        // Delete image from storage if exists
         if ($product->image && Storage::disk('public')->exists($product->image)) {
             Storage::disk('public')->delete($product->image);
         }
 
         $product->delete();
 
-        return redirect()->route('admin.product')->with('success', 'Product deleted successfully.');
+        return redirect()->route('admin.product')
+            ->with('success', 'Produk berhasil dihapus.');
     }
 }

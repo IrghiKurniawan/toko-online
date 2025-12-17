@@ -9,9 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AccountController extends Controller
 {
-    // ==============================
     // LIST DATA
-    // ==============================
     public function index(Request $request)
     {
         $search = $request->input('cari');
@@ -23,17 +21,17 @@ class AccountController extends Controller
         return view('admin.account.index', compact('users'));
     }
 
-    // ==============================
+
     // FORM TAMBAH
-    // ==============================
+
     public function create()
     {
         return view('admin.account.create');
     }
 
-    // ==============================
+
     // SIMPAN DATA AKUN
-    // ==============================
+
     public function store(Request $request)
     {
         $request->validate([
@@ -55,9 +53,9 @@ class AccountController extends Controller
         return redirect()->route('admin.account.data')->with('success', 'Akun berhasil ditambahkan!');
     }
 
-    // ==============================
+
     // FORM EDIT
-    // ==============================
+
     public function edit($id)
     {
         $user = User::findOrFail($id);
@@ -65,9 +63,9 @@ class AccountController extends Controller
         return view('admin.account.edit', compact('user'));
     }
 
-    // ==============================
+
     // UPDATE AKUN
-    // ==============================
+
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -92,9 +90,7 @@ class AccountController extends Controller
         return redirect()->route('admin.account.data')->with('success', 'Akun berhasil diperbarui.');
     }
 
-    // ==============================
     // DELETE AKUN
-    // ==============================
     public function destroy($id)
     {
         $user = User::findOrFail($id);

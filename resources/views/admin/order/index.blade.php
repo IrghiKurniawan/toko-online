@@ -29,7 +29,8 @@
                             <div>
                                 <small class="text-muted d-block">Pending</small>
                                 <h4 class="fw-bold mb-0" style="color:#002455;">
-                                    {{ $orders->where('status', 'pending')->count() }}</h4>
+                                    {{ $orders->where('status', 'pending')->count() }}
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -47,7 +48,8 @@
                             <div>
                                 <small class="text-muted d-block">Processing</small>
                                 <h4 class="fw-bold mb-0" style="color:#002455;">
-                                    {{ $orders->where('status', 'processing')->count() }}</h4>
+                                    {{ $orders->where('status', 'processing')->count() }}
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -65,7 +67,8 @@
                             <div>
                                 <small class="text-muted d-block">Completed</small>
                                 <h4 class="fw-bold mb-0" style="color:#002455;">
-                                    {{ $orders->where('status', 'completed')->count() }}</h4>
+                                    {{ $orders->where('status', 'completed')->count() }}
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -83,7 +86,8 @@
                             <div>
                                 <small class="text-muted d-block">Cancelled</small>
                                 <h4 class="fw-bold mb-0" style="color:#002455;">
-                                    {{ $orders->where('status', 'cancelled')->count() }}</h4>
+                                    {{ $orders->where('status', 'cancelled')->count() }}
+                                </h4>
                             </div>
                         </div>
                     </div>
@@ -94,7 +98,7 @@
         {{-- Orders Table --}}
         <div class="card border-0 shadow-sm" style="border-radius: 16px;">
             <div class="card-header bg-white border-0" style="padding: 1.5rem; border-radius: 16px 16px 0 0;">
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
                     <h5 class="mb-0 fw-bold" style="color:#002455;">
                         <i class="fas fa-list me-2" style="color:#FFC107;"></i>
                         Daftar Pesanan
@@ -105,13 +109,11 @@
                                 style="border: 2px solid #e9ecef; border-right: none; border-radius: 10px 0 0 10px;">
                                 <i class="fas fa-search" style="color:#002455;"></i>
                             </span>
-
                             <input type="text" name="search" value="{{ request('search') }}"
-                                class="form-control border-start-0" placeholder="Cari order..."
+                                class="form-control border-start-0 search-input" placeholder="Cari order..."
                                 style="border: 2px solid #e9ecef; border-left: none; border-radius: 0 10px 10px 0;">
                         </div>
                     </form>
-
                 </div>
             </div>
             <div class="card-body p-0">
@@ -143,8 +145,9 @@
                             @forelse ($orders as $order)
                                 <tr class="order-row" style="transition: all 0.3s ease;">
                                     <td class="px-4 py-3">
-                                        <span class="fw-bold"
-                                            style="color:#002455;">#{{ str_pad($order->id, 6, '0', STR_PAD_LEFT) }}</span>
+                                        <span class="fw-bold" style="color:#002455;">
+                                            #{{ str_pad($order->id, 6, '0', STR_PAD_LEFT) }}
+                                        </span>
                                     </td>
                                     <td class="px-4 py-3">
                                         <div class="d-flex align-items-center">
@@ -154,23 +157,23 @@
                                             </div>
                                             <div>
                                                 <div class="fw-semibold" style="color:#002455;">
-                                                    {{ $order->user->name ?? 'Unknown' }}</div>
-                                                <small
-                                                    class="text-muted">{{ $order->created_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }}
+                                                    {{ $order->user->name ?? 'Unknown' }}
+                                                </div>
+                                                <small class="text-muted">
+                                                    {{ $order->created_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }}
                                                 </small>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-4 py-3">
-                                        <div class="d-flex align-items-center">
-
-                                            <div class="fw-semibold" style="color:#002455;">
-                                                @foreach ($order->items as $item)
-                                                    {{ $item->product->name ?? 'Unknown Product' }}
-                                                    (x{{ $item->quantity }})
+                                        <div class="fw-semibold" style="color:#002455;">
+                                            @foreach ($order->items as $item)
+                                                {{ $item->product->name ?? 'Unknown Product' }}
+                                                (x{{ $item->quantity }})
+                                                @if (!$loop->last)
                                                     <br>
-                                                @endforeach
-                                            </div>
+                                                @endif
+                                            @endforeach
                                         </div>
                                     </td>
                                     <td class="px-4 py-3">
@@ -179,60 +182,80 @@
                                         </span>
                                     </td>
                                     <td class="px-4 py-3">
-                                        <form action="{{ route('admin.orders.update', $order->id) }}" method="POST"
-                                            class="status-form">
-                                            @csrf
-                                            @method('PUT')
-
-                                            <div class="d-flex align-items-center gap-2">
-                                                <select name="status" class="form-select form-select-sm status-select"
-                                                    style="border: 2px solid #e9ecef; border-radius: 8px; font-weight: 600; padding: 0.5rem; max-width: 150px;"
-                                                    {{ in_array($order->status, ['completed', 'cancelled']) ? 'disabled' : '' }}
-                                                    onchange="updateStatusStyle(this)">
-                                                    <option value="pending"
-                                                        {{ $order->status == 'pending' ? 'selected' : '' }}>
-                                                        ⏳ Pending
-                                                    </option>
-                                                    <option value="processing"
-                                                        {{ $order->status == 'processing' ? 'selected' : '' }}>
-                                                        🔄 Processing
-                                                    </option>
-                                                    <option value="completed"
-                                                        {{ $order->status == 'completed' ? 'selected' : '' }}>
-                                                        ✅ Completed
-                                                    </option>
-                                                    <option value="cancelled"
-                                                        {{ $order->status == 'cancelled' ? 'selected' : '' }}>
-                                                        ❌ Cancelled
-                                                    </option>
-                                                </select>
-
-                                                @if (!in_array($order->status, ['completed', 'cancelled']))
-                                                    <button type="submit" class="btn btn-sm save-btn"
-                                                        style="background-color: #002455; color:#fff; border: none; border-radius: 8px; padding: 0.5rem 1rem; font-weight: 600; transition: all 0.3s ease;">
-                                                        <i class="fas fa-save me-1"></i>Save
-                                                    </button>
-                                                @else
-                                                    <span class="badge px-3 py-2"
-                                                        style="background-color: {{ $order->status == 'completed' ? '#28a745' : '#dc3545' }}; border-radius: 8px;">
-                                                        <i class="fas fa-lock me-1"></i>Locked
-                                                    </span>
-                                                @endif
-                                            </div>
-                                        </form>
+                                        <div class="d-flex align-items-center gap-2">
+                                            @if ($order->status == 'completed' || $order->status == 'cancelled')
+                                                {{-- Tampilkan status sebagai badge tanpa dropdown --}}
+                                                <span class="badge px-3 py-2 fw-bold"
+                                                    style="background-color: {{ $order->status == 'completed' ? '#28a745' : '#dc3545' }};
+                color: white;
+                border-radius: 8px;
+                font-size: 0.875rem;">
+                                                    @if ($order->status == 'completed')
+                                                        <i class="fas fa-check-circle me-1"></i>Completed
+                                                    @else
+                                                        <i class="fas fa-times-circle me-1"></i>Cancelled
+                                                    @endif
+                                                </span>
+                                            @else
+                                                {{-- Tampilkan dropdown untuk status yang bisa diubah --}}
+                                                <form action="{{ route('admin.orders.update', $order->id) }}"
+                                                    method="POST" class="status-form m-0">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <select name="status"
+                                                            class="form-select form-select-sm status-select"
+                                                            style="border: 2px solid #e9ecef;
+                            border-radius: 8px;
+                            font-weight: 600;
+                            padding: 0.5rem;
+                            max-width: 150px;
+                            cursor: pointer;">
+                                                            <option value="pending"
+                                                                {{ $order->status == 'pending' ? 'selected' : '' }}>
+                                                                ⏳ Pending
+                                                            </option>
+                                                            <option value="processing"
+                                                                {{ $order->status == 'processing' ? 'selected' : '' }}>
+                                                                🔄 Processing
+                                                            </option>
+                                                            <option value="completed"
+                                                                {{ $order->status == 'completed' ? 'selected' : '' }}>
+                                                                ✅ Completed
+                                                            </option>
+                                                            <option value="cancelled"
+                                                                {{ $order->status == 'cancelled' ? 'selected' : '' }}>
+                                                                ❌ Cancelled
+                                                            </option>
+                                                        </select>
+                                                        <button type="submit" class="btn btn-sm save-btn"
+                                                            style="background-color: #002455;
+                                                            color:#fff;
+                                                            border: none;
+                                                            border-radius: 8px;
+                                                            padding: 0.5rem 1rem;
+                                                            font-weight: 600;
+                                                            transition: all 0.3s ease;">
+                                                            <i class="fas fa-save me-1"></i>Save
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            @endif
+                                        </div>
                                     </td>
                                     <td class="px-4 py-3">
                                         <div class="d-flex gap-2">
-                                            <button class="btn btn-sm action-btn"
-                                                style="background-color: transparent; color:#002455; border: 2px solid #002455; border-radius: 8px; padding: 0.375rem 0.75rem; font-weight: 600; transition: all 0.3s ease;"
+                                            <a href="{{ route('admin.orders.view', $order->id) }}"
+                                                class="btn btn-sm action-btn view-btn"
+                                                style="background-color: transparent; color:#002455; border: 2px solid #002455; border-radius: 8px; padding: 0.375rem 0.75rem; font-weight: 600; transition: all 0.3s ease; text-decoration: none;"
                                                 title="View Details">
                                                 <i class="fas fa-eye"></i>
-                                            </button>
-                                            <form action="{{ route('admin.orders.destroy', $order->id) }}"
-                                                method="POST">
+                                            </a>
+                                            <form action="{{ route('admin.orders.destroy', $order->id) }}" method="POST"
+                                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus pesanan ini?');">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button class="btn btn-sm action-btn"
+                                                <button type="submit" class="btn btn-sm action-btn delete-btn"
                                                     style="background-color: transparent; color:#dc3545; border: 2px solid #dc3545; border-radius: 8px; padding: 0.375rem 0.75rem; font-weight: 600; transition: all 0.3s ease;"
                                                     title="Delete">
                                                     <i class="fas fa-trash"></i>
@@ -243,7 +266,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5" class="text-center py-5">
+                                    <td colspan="6" class="text-center py-5">
                                         <div class="empty-state">
                                             <i class="fas fa-inbox fa-3x mb-3" style="color:#002455; opacity: 0.3;"></i>
                                             <h5 class="fw-bold mb-2" style="color:#002455;">Belum Ada Pesanan</h5>
@@ -270,7 +293,7 @@
         /* Order Row Hover */
         .order-row:hover {
             background-color: rgba(0, 36, 85, 0.02);
-            transform: translateX(5px);
+            transform: translateX(3px);
         }
 
         /* Status Select Styling */
@@ -281,43 +304,47 @@
         .status-select:focus {
             border-color: #002455 !important;
             box-shadow: 0 0 0 0.25rem rgba(0, 36, 85, 0.15) !important;
+            outline: none;
         }
 
-        .status-select option[value="pending"] {
-            color: #ffc107;
-        }
-
-        .status-select option[value="processing"] {
-            color: #17a2b8;
-        }
-
-        .status-select option[value="completed"] {
-            color: #28a745;
-        }
-
-        .status-select option[value="cancelled"] {
-            color: #dc3545;
+        .status-select:disabled {
+            background-color: #f8f9fa;
+            cursor: not-allowed;
         }
 
         /* Save Button Hover */
         .save-btn:hover {
-            background-color: #1B3C53 !important;
+            background-color: #001a3a !important;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 36, 85, 0.3);
         }
 
+        .save-btn:active {
+            transform: translateY(0);
+        }
+
         /* Action Button Hover */
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .action-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .action-btn:first-child:hover {
+        .action-btn:active {
+            transform: translateY(0);
+        }
+
+        .view-btn:hover {
             background-color: #002455 !important;
             color: #fff !important;
         }
 
-        .action-btn:last-child:hover {
+        .delete-btn:hover {
             background-color: #dc3545 !important;
             color: #fff !important;
         }
@@ -325,6 +352,7 @@
         /* Customer Avatar Animation */
         .customer-avatar {
             transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
         .order-row:hover .customer-avatar {
@@ -349,17 +377,27 @@
             box-shadow: 0 4px 8px rgba(0, 36, 85, 0.3);
         }
 
-        .pagination .page-link:hover {
+        .pagination .page-link:hover:not(.active) {
             background-color: #002455;
             color: #fff;
             border-color: #002455;
             transform: translateY(-2px);
         }
 
+        .pagination .page-item.disabled .page-link {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
         /* Search Input Focus */
-        .input-group input:focus {
+        .search-input:focus {
             border-color: #002455 !important;
             box-shadow: 0 0 0 0.25rem rgba(0, 36, 85, 0.15) !important;
+            outline: none;
+        }
+
+        .input-group:focus-within .input-group-text {
+            border-color: #002455 !important;
         }
 
         /* Icon Wrapper Hover */
@@ -368,33 +406,42 @@
         }
 
         .card:hover .icon-wrapper {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .order-row:hover {
+                transform: none;
+            }
+
+            .action-btn:hover,
+            .save-btn:hover {
+                transform: none;
+            }
+
+            .card:hover .icon-wrapper {
+                transform: none;
+            }
+        }
+
+        /* Table responsive scrollbar */
+        .table-responsive::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .table-responsive::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .table-responsive::-webkit-scrollbar-thumb {
+            background: #002455;
+            border-radius: 10px;
+        }
+
+        .table-responsive::-webkit-scrollbar-thumb:hover {
+            background: #001a3a;
         }
     </style>
-
-    <script>
-        // Update status select styling based on value
-        function updateStatusStyle(select) {
-            const value = select.value;
-            select.style.borderColor = getStatusColor(value);
-            select.style.color = getStatusColor(value);
-        }
-
-        function getStatusColor(status) {
-            const colors = {
-                'pending': '#ffc107',
-                'processing': '#17a2b8',
-                'completed': '#28a745',
-                'cancelled': '#dc3545'
-            };
-            return colors[status] || '#002455';
-        }
-
-        // Initialize status styling on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.status-select').forEach(select => {
-                updateStatusStyle(select);
-            });
-        });
-    </script>
 @endsection

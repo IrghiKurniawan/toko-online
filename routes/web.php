@@ -1,21 +1,20 @@
 <?php
 
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-
-// controllers admin
+use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+// controllers admin
 use App\Http\Controllers\Admin\OrderAdminController;
 use App\Http\Controllers\Admin\ProductAdminController;
-use App\Http\Controllers\Admin\AccountController;
-// controllers customer
-
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\CheckoutController;
 use App\Http\Controllers\Customer\OrderController;
+// controllers customer
+
 use App\Http\Controllers\Customer\ProductController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -36,6 +35,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::delete('/product/destroy/{id}', [ProductAdminController::class, 'destroy'])->name('product.destroy');
     // Order Routes
     Route::get('/orders', [OrderAdminController::class, 'index'])->name('orders');
+    Route::get('/orders/view/{id}', [OrderAdminController::class, 'view'])->name('orders.view');
     Route::put('/orders/update/{id}', [OrderAdminController::class, 'updateStatus'])->name('orders.update');
     Route::delete('/order/destroy/{id}', [OrderAdminController::class, 'destroy'])->name('orders.destroy');
 
@@ -47,8 +47,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
         Route::put('/account/update/{id}', [AccountController::class, 'update'])->name('update');
         Route::delete('/account/delete/{id}', [AccountController::class, 'destroy'])->name('delete');
     });
-
-
 
     // Logout Route
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
